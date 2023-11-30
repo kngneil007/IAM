@@ -1,0 +1,24 @@
+#This module is to create an IAM user
+
+resource "aws_iam_user" "Patrick" {
+  name = "Patrick"
+  path = "/system/"
+
+  tags = {
+    tag-key = "Location-NewYork"
+  }
+}
+
+resource "aws_iam_access_key" "lb" {
+  user = aws_iam_user.Patrick.name
+}
+
+#This module is to assign a user to a group
+
+resource "aws_iam_user_group_membership" "West_side_story" {
+  user = aws_iam_user.Patrick.name
+
+  groups = [
+    aws_iam_group.West_side_story.name
+  ]
+}
